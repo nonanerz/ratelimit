@@ -18,7 +18,7 @@ class CheckedRateLimitEvent extends AbstractEvent
      */
     protected $rateLimit;
 
-    public function __construct(Request $request, RateLimit $rateLimit = null)
+    public function __construct(Request $request, ?RateLimit $rateLimit = null)
     {
         $this->request = $request;
         $this->rateLimit = $rateLimit;
@@ -27,7 +27,7 @@ class CheckedRateLimitEvent extends AbstractEvent
     /**
      * @return RateLimit|null
      */
-    public function getRateLimit()
+    public function getRateLimit(): ?RateLimit
     {
         return $this->rateLimit;
     }
@@ -35,7 +35,7 @@ class CheckedRateLimitEvent extends AbstractEvent
     /**
      * @param RateLimit|null $rateLimit
      */
-    public function setRateLimit(RateLimit $rateLimit = null)
+    public function setRateLimit(?RateLimit $rateLimit = null): void
     {
         $this->rateLimit = $rateLimit;
     }

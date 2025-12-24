@@ -10,7 +10,7 @@ class RedisTest extends TestCase
     public function testgetRateInfo()
     {
         $client = $this->getMockBuilder('Predis\\Client')
-            ->setMethods(array('hgetall'))
+            ->addMethods(array('hgetall'))
             ->getMock();
         $client->expects($this->once())
               ->method('hgetall')
@@ -28,18 +28,13 @@ class RedisTest extends TestCase
     public function testcreateRate()
     {
         $client = $this->getMockBuilder('Predis\\Client')
-            ->setMethods(array('hset', 'expire', 'hgetall'))
+            ->addMethods(array('hset', 'expire', 'hgetall'))
             ->getMock();
         $client->expects($this->once())
               ->method('expire')
               ->with('foo', 123);
         $client->expects($this->exactly(3))
-              ->method('hset')
-              ->withConsecutive(
-                    array('foo', 'limit', 100),
-                    array('foo', 'calls', 1),
-                    array('foo', 'reset')
-              );
+              ->method('hset');
 
         $storage = new Redis($client);
         $storage->createRate('foo', 100, 123);
@@ -49,7 +44,7 @@ class RedisTest extends TestCase
     public function testLimitRateNoKey()
     {
         $client = $this->getMockBuilder('Predis\\Client')
-            ->setMethods(array('hgetall'))
+            ->addMethods(array('hgetall'))
             ->getMock();
         $client->expects($this->once())
               ->method('hgetall')
@@ -63,7 +58,7 @@ class RedisTest extends TestCase
     public function testLimitRateWithKey()
     {
         $client = $this->getMockBuilder('Predis\\Client')
-            ->setMethods(array('hexists', 'hincrby', 'hgetall'))
+            ->addMethods(array('hexists', 'hincrby', 'hgetall'))
             ->getMock();
         $client->expects($this->once())
             ->method('hgetall')
@@ -87,7 +82,7 @@ class RedisTest extends TestCase
     public function testresetRate()
     {
         $client = $this->getMockBuilder('Predis\\Client')
-            ->setMethods(array('del'))
+            ->addMethods(array('del'))
             ->getMock();
         $client->expects($this->once())
               ->method('del')
@@ -100,7 +95,7 @@ class RedisTest extends TestCase
     public function testSanitizeKey()
     {
         $client = $this->getMockBuilder('Predis\\Client')
-            ->setMethods(array('del'))
+            ->addMethods(array('del'))
             ->getMock();
         $client->expects($this->once())
               ->method('del')

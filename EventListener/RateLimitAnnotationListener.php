@@ -160,7 +160,7 @@ class RateLimitAnnotationListener extends BaseListener
         $keyEvent->addToKey($rateLimitMethods);
 
         $rateLimitAlias = count($rateLimits) === 0
-            ? str_replace('/', '.', $this->pathLimitProcessor->getMatchedPath($request))
+            ? str_replace('/', '.', $this->pathLimitProcessor->getMatchedPath($request) ?? '')
             : $this->getAliasForRequest($event);
         $keyEvent->addToKey($rateLimitAlias);
         $this->eventDispatcher->dispatch($keyEvent, RateLimitEvents::GENERATE_KEY);

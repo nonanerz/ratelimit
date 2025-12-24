@@ -39,10 +39,10 @@ class PsrCacheTest extends TestCase
             ->getMock();
         $item->expects($this->once())
             ->method('set')
-            ->willReturn(true);
+            ->willReturnSelf();
         $item->expects($this->once())
             ->method('expiresAfter')
-            ->willReturn(true);
+            ->willReturnSelf();
 
         $client = $this->getMockBuilder('Psr\\Cache\\CacheItemPoolInterface')
             ->getMock();
